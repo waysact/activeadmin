@@ -1,3 +1,15 @@
+GIT
+  remote: https://github.com/sass/sassc-rails
+  revision: c314d1c81117615d0bb70c28dada361e6ead883a
+  branch: rmb/drop_sass
+  specs:
+    sassc-rails (2.0.0)
+      railties (>= 4.0.0)
+      sassc (>= 2.0)
+      sprockets (> 3.0)
+      sprockets-rails
+      tilt
+
 PATH
   remote: ..
   specs:
@@ -10,7 +22,7 @@ PATH
       kaminari (>= 1.0.1)
       railties (>= 4.2, < 5.3)
       ransack (>= 1.8.7)
-      sassc (~> 2.0)
+      sassc-rails (~> 2.0)
       sprockets (>= 3.0, < 4.1)
       sprockets-es6 (>= 0.9.2)
 
@@ -358,6 +370,7 @@ GEM
     thor (0.20.0)
     thread_safe (0.3.6)
     thread_safe (0.3.6-java)
+    tilt (2.0.8)
     tomlrb (1.2.7)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
@@ -411,6 +424,7 @@ DEPENDENCIES
   redcarpet
   rspec-rails
   rubocop (= 0.51.0)
+  sassc-rails!
   selenium-webdriver
   shoulda-matchers (<= 2.8.0)
   simplecov
