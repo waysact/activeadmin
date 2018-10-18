@@ -3,12 +3,12 @@ require 'rails_helper'
 describe ActiveAdmin::ResourceController::Sidebars do
   let(:controller){ Admin::PostsController }
 
-  context 'without before_filter' do
+  context 'without before_action' do
     before do
       ActiveAdmin.register Post
     end
 
-    subject { find_before_filter controller, :skip_sidebar! }
+    subject { find_before_action controller, :skip_sidebar! }
 
     it { is_expected.to set_skip_sidebar_to nil, for: controller }
   end
@@ -16,16 +16,16 @@ describe ActiveAdmin::ResourceController::Sidebars do
   describe '#skip_sidebar!' do
     before do
       ActiveAdmin.register Post do
-        before_filter :skip_sidebar!
+        before_action :skip_sidebar!
       end
     end
 
-    subject { find_before_filter controller, :skip_sidebar! }
+    subject { find_before_action controller, :skip_sidebar! }
 
     it { is_expected.to set_skip_sidebar_to true, for: controller }
   end
 
-  def find_before_filter(controller, filter)
+  def find_before_action(controller, filter)
     #raise controller._process_action_callbacks.map(&:filter).inspect
     controller._process_action_callbacks.detect { |f| f.raw_filter == filter.to_sym }
   end
@@ -39,7 +39,7 @@ describe ActiveAdmin::ResourceController::Sidebars do
     end
 
     failure_message do |filter|
-      message = "expected before_filter to set @skip_sidebar to '#{expected}', but was '#{@actual}'"
+      message = "expected before_action to set @skip_sidebar to '#{expected}', but was '#{@actual}'"
     end
   end
 end

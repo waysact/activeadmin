@@ -52,7 +52,7 @@ describe 'defining new actions from registration blocks' do
         end
       end
 
-      subject { find_before_filter controller, :comment }
+      subject { find_before_action controller, :comment }
 
       it { is_expected.to set_page_title_to "My Awesome Comment", for: controller }
     end
@@ -102,13 +102,13 @@ describe 'defining new actions from registration blocks' do
         end
       end
 
-      subject { find_before_filter controller, :comments }
+      subject { find_before_action controller, :comments }
 
       it { is_expected.to set_page_title_to "My Awesome Comments", for: controller }
     end
   end
 
-  def find_before_filter(controller, action)
+  def find_before_action(controller, action)
     finder = if ActiveAdmin::Dependency.rails? '>= 4.1.0'
       ->c { c.kind == :before && c.instance_variable_get(:@if) == ["action_name == '#{action}'"] }
     else
@@ -126,7 +126,7 @@ describe 'defining new actions from registration blocks' do
     end
 
     failure_message do |filter|
-      message = "expected before_filter to set the @page_title to '#{expected}', but was '#{@actual}'"
+      message = "expected before_action to set the @page_title to '#{expected}', but was '#{@actual}'"
     end
   end
 end

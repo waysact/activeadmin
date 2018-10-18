@@ -209,9 +209,9 @@ module ActiveAdmin
 
     # Adds before, around and after filters to all controllers.
     # Example usage:
-    #   ActiveAdmin.before_filter :authenticate_admin!
+    #   ActiveAdmin.before_action :authenticate_admin!
     #
-    %w(before_filter skip_before_filter after_filter skip_after_filter around_filter skip_filter).each do |name|
+    %w(before_action skip_before_action after_action skip_after_action around_action skip_filter).each do |name|
       define_method name do |*args, &block|
         controllers_for_filters.each do |controller|
           controller.public_send name, *args, &block
@@ -250,16 +250,16 @@ module ActiveAdmin
     # If files have changed on disk, we forcibly unload all AA configurations, and
     # tell the host application to redraw routes (triggering AA itself to reload).
     def attach_reloader
-      load_paths.each do |path|
-        ActiveAdmin::Engine.config.watchable_dirs[path] = [:rb]
-      end
+      # load_paths.each do |path|
+      #   ActiveAdmin::Engine.config.watchable_dirs[path] = [:rb]
+      # end
 
-      Rails.application.config.after_initialize do
-        ActionDispatch::Reloader.to_prepare do
-          ActiveAdmin.application.unload!
-          Rails.application.reload_routes!
-        end
-      end
+      # Rails.application.config.after_initialize do
+      #   ActionDispatch::Reloader.to_prepare do
+      #     ActiveAdmin.application.unload!
+      #     Rails.application.reload_routes!
+      #   end
+      # end
     end
   end
 end

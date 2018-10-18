@@ -34,7 +34,7 @@ Feature: Index - Page Title
     """
       ActiveAdmin.register Post do
         controller do
-          before_filter { @page_title = "List of #{resource_class.model_name.plural}" }
+          before_action { @page_title = "List of #{resource_class.model_name.plural}" }
         end
       end
     """

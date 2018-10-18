@@ -275,7 +275,7 @@ application locales. [#1775][] by [@caifara][]
 * Support subURI on logout [#1681][] by [@yawn][]
 
 ### Bug fix
-* Apply before_filter to BaseController [#1683][] by [@yorch][]
+* Apply before_action to BaseController [#1683][] by [@yorch][]
 * ... and much more.
 
 ### Contributions
@@ -619,7 +619,7 @@ since we've changed both the CSS and JS files.
 * Menus now support `if` and `priority` (Moritz Lawitschka)
 * Rails 3.1 support
 * Asset pipeline support ([@gregbell][])
-* `skip_before_filter` now supported in DSL ([@shayfrendt][])
+* `skip_before_action` now supported in DSL ([@shayfrendt][])
 * Added a blank slate design ([@mattvague][])
 * Collection and Member actions use the Active Admin layout ([@gregbell][])
 
