@@ -8,6 +8,7 @@ module ActiveAdmin
     autoload :FilterStringInput
     autoload :FilterDateRangeInput
     autoload :FilterNumericInput
+    autoload :FilterRangeNumericInput
     autoload :FilterSelectInput
     autoload :FilterCheckBoxesInput
     autoload :FilterBooleanInput
