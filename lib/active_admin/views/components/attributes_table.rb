@@ -26,7 +26,7 @@ module ActiveAdmin
         if options[:class]
           classes << options[:class]
         elsif title.present?
-          classes << "row-#{title.to_s.parameterize('_')}"
+          classes << "row-#{title.to_s.parameterize(separator: '_')}"
         end
         options[:class] = classes.join(' ')
 
