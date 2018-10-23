@@ -256,8 +256,30 @@ module ActiveAdmin
           end
         end
 
-        def default_actions
-          raise '`default_actions` is no longer provided in ActiveAdmin 1.x. Use `actions` instead.'
+        # def default_actions
+        #   raise '`default_actions` is no longer provided in ActiveAdmin 1.x. Use `actions` instead.'
+        # end
+
+        def default_actions(options = {})
+          options = { name: '', except: [] }.merge(options)
+
+          column options[:name] do |resource|
+            links = String.new
+
+            unless options[:except].include?(:view)
+              links += link_to I18n.t('active_admin.view'), resource_path(resource), class: "member_link view_link"
+            end
+
+            unless options[:except].include?(:edit)
+              links += link_to I18n.t('active_admin.edit'), edit_resource_path(resource), class: "member_link edit_link"
+            end
+
+            unless options[:except].include?(:delete)
+              links += link_to I18n.t('active_admin.delete'), resource_path(resource), method: :delete, data: { confirm: I18n.t('active_admin.delete_confirmation') }, class: "member_link delete_link"
+            end
+
+            links.html_safe
+          end
         end
 
         # Add links to perform actions.

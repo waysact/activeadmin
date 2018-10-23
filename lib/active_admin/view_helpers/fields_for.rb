@@ -17,7 +17,7 @@ module ActiveAdmin
         namespace = options[:namespace]
         except = options[:except].is_a?(Array) ? options[:except] : [options[:except]]
 
-        params.map do |k, v|
+        params.permit!.to_hash.map do |k, v|
           next if namespace.nil? && %w(controller action commit utf8).include?(k.to_s)
           next if except.map(&:to_s).include?(k.to_s)
 

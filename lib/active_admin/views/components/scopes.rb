@@ -30,15 +30,32 @@ module ActiveAdmin
       protected
 
       def build_scope(scope, options)
-        li class: classes_for_scope(scope) do
-          scope_name = I18n.t "active_admin.scopes.#{scope.id}", default: scope.name
-          params     = request.query_parameters.except :page, :scope, :commit, :format
+        # li class: classes_for_scope(scope) do
+        #   scope_name = I18n.t "active_admin.scopes.#{scope.id}", default: scope.name
+        #   params     = request.query_parameters.except :page, :scope, :commit, :format
 
-          a href: url_for(scope: scope.id, params: params), class: 'table_tools_button' do
-            text_node scope_name
-            span class: 'count' do
-              "(#{get_scope_count(scope)})"
-            end if options[:scope_count] && scope.show_count
+        #   a href: url_for(scope: scope.id, params: params), class: 'table_tools_button' do
+        #     text_node scope_name
+        #     span class: 'count' do
+        #       "(#{get_scope_count(scope)})"
+        #     end if options[:scope_count] && scope.show_count
+        #   end
+        # end
+        span class: classes_for_scope(scope) do
+          begin
+            scope_name = if scope.scope_method.to_s == 'alien' && current_account.alien_label.present?
+              current_account.alien_label.titleize
+            else
+              I18n.t!("active_admin.scopes.#{scope.scope_method}")
+            end
+          rescue I18n::MissingTranslationData
+            scope_name = scope.name
+          end
+
+          if current_scope?(scope)
+            em(scope_name)
+          else
+            a(scope_name, href: url_for(request.query_parameters.merge(scope: scope.id, page: 1)))
           end
         end
       end

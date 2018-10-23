@@ -134,9 +134,56 @@ module ActiveAdmin
 
         # Renders the content for the footer
         def build_footer
-          insert_tag view_factory.footer
-        end
+          if ENV['GOOGLE_ANALYTICS_ID'].present?
+            within @head do
+              script "(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', '#{ENV['GOOGLE_ANALYTICS_ID']}', 'auto');ga('send', 'pageview');".html_safe
+            end
+          end
 
+          div id: 'footer' do
+            para "Powered by #{link_to("WaysAct", "http://www.waysact.com")}".html_safe
+            current_arbre_element.add_child(ArbreVerbatimElement.new(include_gon))
+          end
+        end
+      end
+    end
+  end
+end
+
+class ArbreVerbatimElement < Arbre::Element
+  def initialize(verbatim_content)
+    super
+    @verbatim_content = verbatim_content
+  end
+
+  def to_s
+    @verbatim_content
+  end
+end
+
+class ActiveAdmin::Views::Pages::Base < Arbre::HTML::Document
+
+  private
+
+  def build_page
+    within @body do
+      div :id => "wrapper" do
+        build_header
+        build_title_bar
+        build_page_content
+        build_footer
+      end
+
+      div :id => "is_mothership_flag", :style => 'display: none;' do
+        current_account.is_mothership ? "true" : "false"
+      end
+
+      div :id => "is_translator_flag", :style => 'display: none;' do
+        current_user.is_translator? ? "true" : "false"
+      end
+
+      div id: 'is_client_flag', style: 'display: none;' do
+        current_user.is_client? ? 'true' : 'false'
       end
     end
   end
